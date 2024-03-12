@@ -33,27 +33,19 @@ spec:
       type: string
       default: "ecs.gn6i-c4g1.xlarge"
       required: false
-    INTERNET_MAX_BANDWIDTH_IN:
-      description: "The max bandwidth in of the internet"
-      type: string
-      default: "100"
-      required: false
-    INTERNET_MAX_BANDWIDTH_OUT:
-      description: "The max bandwidth out of the internet"
-      type: string
-      default: "100"
-      required: false
 ---
 apiVersion: dev.opt.sealos.io/v1
 kind: VirtualMachinesClaim
 metadata:
   name: ${{ defaults.app_name }}
+  labels:
+    cloud.sealos.io/app-deploy-manager: ${{ defaults.app_name }}
 spec:
   amount: 1
   diskCategory: ${{ inputs.DISK_CATEGORY }}
-  diskSize: ${{ inputs.DISK_SIZE }}
+  diskSize: "${{ inputs.DISK_SIZE }}"
   imageId: m-bp18654sp3w5cmkyiga3
   instanceType: ${{ inputs.INSTANCE_TYPE }}
   internetChargeType: PayByTraffic
-  internetMaxBandwidthIn: ${{ inputs.INTERNET_MAX_BANDWIDTH_IN }}
-  internetMaxBandwidthOut: ${{ inputs.INTERNET_MAX_BANDWIDTH_OUT }}
+  internetMaxBandwidthIn: 100
+  internetMaxBandwidthOut: 100
