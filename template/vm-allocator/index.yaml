@@ -1,0 +1,59 @@
+apiVersion: app.sealos.io/v1
+kind: Template
+metadata:
+  name: vm-alloc
+spec:
+  title: 'GPU独立主机'
+  url: 'https://github.com/thijsvanloef/palworld-server-docker'
+  gitRepo: 'https://github.com/thijsvanloef/palworld-server-docker'
+  author: 'Sealos'
+  description: '申请独立主机，包含CPU、内存、GPU等资源'
+  readme: 'https://mirror.ghproxy.com/https://raw.githubusercontent.com/luanshaotong/templates/main/template/vm-allocator/README.md'
+  icon: 'https://raw.githubusercontent.com/labring-actions/templates/main/template/palworld/logo.jpg'
+  templateType: inline
+  categories:
+    - infra
+  defaults:
+    app_name:
+      type: string
+      value: vm-alloc-${{ random(8) }}
+  inputs:
+    DISK_SIZE:
+      description: "The size of the disk in GB"
+      type: string
+      default: "100"
+      required: true
+    DISK_CATEGORY:
+      description: "The category of the disk, cloud_essd or cloud_ssd"
+      type: string
+      default: "cloud_essd"
+      required: false
+    INSTANCE_TYPE:
+      description: "The type of the instance"
+      type: string
+      default: "ecs.gn6i-c4g1.xlarge"
+      required: false
+    INTERNET_MAX_BANDWIDTH_IN:
+      description: "The max bandwidth in of the internet"
+      type: string
+      default: "100"
+      required: false
+    INTERNET_MAX_BANDWIDTH_OUT:
+      description: "The max bandwidth out of the internet"
+      type: string
+      default: "100"
+      required: false
+---
+apiVersion: dev.opt.sealos.io/v1
+kind: VirtualMachinesClaim
+metadata:
+  name: ${{ defaults.app_name }}
+spec:
+  amount: 1
+  diskCategory: ${{ inputs.DISK_CATEGORY }}
+  diskSize: ${{ inputs.DISK_SIZE }}
+  imageId: m-bp18654sp3w5cmkyiga3
+  instanceType: ${{ inputs.INSTANCE_TYPE }}
+  internetChargeType: PayByTraffic
+  internetMaxBandwidthIn: ${{ inputs.INTERNET_MAX_BANDWIDTH_IN }}
+  internetMaxBandwidthOut: ${{ inputs.INTERNET_MAX_BANDWIDTH_OUT }}
