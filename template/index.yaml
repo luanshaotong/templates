@@ -9,7 +9,7 @@ spec:
   author: 'Sealos'
   description: '申请独立主机，包含CPU、内存、GPU等资源'
   readme: 'https://mirror.ghproxy.com/https://raw.githubusercontent.com/luanshaotong/templates/main/template/vm-allocator/README.md'
-  icon: 'https://raw.githubusercontent.com/labring-actions/templates/main/template/palworld/logo.jpg'
+  icon: 'https://avatars.githubusercontent.com/u/102226726?s=96&v=4'
   templateType: inline
   categories:
     - infra
